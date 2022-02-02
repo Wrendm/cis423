@@ -165,7 +165,7 @@ class KNNTransformer(BaseEstimator, TransformerMixin):
   #your code
   def fit(self, X, y = None):
     print(f"Warning: {self.__class__.__name__}.fit does nothing.")
-    return self
+    return X
 
   def transform(self, X):
     X_ = X
@@ -173,7 +173,7 @@ class KNNTransformer(BaseEstimator, TransformerMixin):
     columns = X_.columns
     matrix = knni.fit_transform(X_)
     result_df = pd.DataFrame(matrix,columns=columns)
-    return X_
+    return result_df
 
   def fit_transform(self, X, y = None):
     result = self.transform(X)
