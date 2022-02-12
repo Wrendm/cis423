@@ -202,3 +202,24 @@ def find_random_state(df, labels, n=200):
   rs_value = sum(var)/len(var)
   nearest_val = nearest(var, rs_value)
   return var.index(nearest_val)
+#############################################################################################################################
+titanic_transformer = Pipeline(steps=[
+    ('drop', DropColumnsTransformer(['Age', 'Gender', 'Class', 'Joined', 'Married',  'Fare'], 'keep')),
+    ('gender', MappingTransformer('Gender', {'Male': 0, 'Female': 1})),
+    ('class', MappingTransformer('Class', {'Crew': 0, 'C3': 1, 'C2': 2, 'C1': 3})),
+    ('ohe', OHETransformer(target_column='Joined')),
+    ('age', TukeyTransformer(target_column='Age', fence='outer')), #from chapter 4
+    ('fare', TukeyTransformer(target_column='Fare', fence='outer')), #from chapter 4
+    ('minmax', MinMaxTransformer()),  #from chapter 5
+    ('imputer', KNNTransformer())  #from chapter 6
+    ], verbose=True)
+#############################################################################################################################
+customer_transformer = Pipeline(steps=[
+    ('id', DropColumnsTransformer(column_list=['ID'])),
+    ('os', OHETransformer(target_column='OS')),
+    ('isp', OHETransformer(target_column='ISP')),
+    ('level', MappingTransformer('Experience Level', {'low': 0, 'medium': 1, 'high':2})),
+    ('gender', MappingTransformer('Gender', {'Male': 0, 'Female': 1})),
+    ('time spent', TukeyTransformer('Time Spent', 'inner')),
+    ('minmax', MinMaxTransformer())
+    ], verbose=True)
