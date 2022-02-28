@@ -227,7 +227,7 @@ customer_transformer = Pipeline(steps=[
     ], verbose=True)
 #############################################################################################################################
 def dataset_setup(feature_table, labels, the_transformer, rs=1234, ts=.2):
-  X_train, X_test, y_train, y_test = train_test_split(titanic_features, labels, test_size=0.2, shuffle=True,
+  X_train, X_test, y_train, y_test = train_test_split(feature_table, labels, test_size=0.2, shuffle=True,
                                                     random_state=rs, stratify=labels)
   X_train_transformed = the_transformer.fit_transform(X_train)
   X_test_transformed = the_transformer.fit_transform(X_test)
