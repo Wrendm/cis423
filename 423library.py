@@ -268,3 +268,16 @@ def threshold_results(thresh_list, actuals, predicted):
     accuracy = accuracy_score(actuals, yhat)
     result_df.loc[len(result_df)] = {'threshold':t, 'precision':precision, 'recall':recall, 'f1':f1, 'accuracy':accuracy}
   return result_df
+#############################################################################################################################
+ 
+employee_transformer = Pipeline(steps=[
+    ('ohe', OHETransformer(target_column='City')),
+    ('benched', MappingTransformer('EverBenched', {'No': 1, 'Yes': 0})),
+    ('edLevel', MappingTransformer('Education', {'PHD': 1, 'Masters': 2, 'Bachelors': 3})),
+    ('gender', MappingTransformer('Gender', {'Male': 0, 'Female': 1})),
+    ('joined', TukeyTransformer('JoiningYear', 'outer')),
+    ('payment', TukeyTransformer('PaymentTier', 'outer')),
+    ('age', TukeyTransformer('Age', 'outer')),
+    ('experience', TukeyTransformer('ExperienceInCurrentDomain', 'outer')),
+    ('imputer', KNNTransformer())
+    ], verbose=True)
