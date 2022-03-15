@@ -275,9 +275,7 @@ employee_transformer = Pipeline(steps=[
     ('benched', MappingTransformer('EverBenched', {'No': 1, 'Yes': 0})),
     ('edLevel', MappingTransformer('Education', {'PHD': 1, 'Masters': 2, 'Bachelors': 3})),
     ('gender', MappingTransformer('Gender', {'Male': 0, 'Female': 1})),
-    ('joined', TukeyTransformer('JoiningYear', 'outer')),
-    ('payment', TukeyTransformer('PaymentTier', 'outer')),
+    ('joined', MappingTransformer('JoiningYear', {2012: 1, 2013: 2,2014: 3,2015: 4,2016: 5,2017: 6,2018: 6})),
     ('age', TukeyTransformer('Age', 'outer')),
-    ('experience', TukeyTransformer('ExperienceInCurrentDomain', 'outer')),
     ('imputer', KNNTransformer())
     ], verbose=True)
